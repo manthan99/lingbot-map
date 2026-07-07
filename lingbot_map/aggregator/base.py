@@ -569,6 +569,8 @@ class AggregatorBase(nn.Module, ABC):
             images,
             num_frame_for_scale=num_frame_for_scale,
         )
+        # Store initial embeddings (before any blocks) for extraction
+        self._last_embeds = tokens
 
         # Get position embeddings
         pos_local = self._get_positions(B, S_local, H, W, device=images.device)
