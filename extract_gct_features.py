@@ -167,12 +167,13 @@ def main():
         
         with torch.no_grad(), torch.amp.autocast("cuda", dtype=dtype):
             # Process all 16 frames in one block
-            aggregated_tokens_list, patch_start_idx, initial_embeds = model._aggregate_features(
+            aggregated_tokens_list, patch_start_idx = model._aggregate_features(
                 images,
                 num_frame_for_scale=16,
                 num_frame_per_block=16,
                 causal_inference=True
             )
+            initial_embeds = model.aggregator._last_embeds
             
             # aggregated_tokens_list is a list of 4 tensors, usually shaped [B, S, N, D]
             # We only want the last frame's tokens: S = -1

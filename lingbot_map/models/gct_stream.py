@@ -279,10 +279,7 @@ class GCTStream(GCTBase):
             sliding_window_size=sliding_window_size,
             num_frame_per_block=num_frame_per_block,
         )
-        # Access the initial tokens stored during aggregator.forward()
-        # Shape: [B*S, P, C]
-        initial_embeds = self.aggregator._last_embeds
-        return aggregated_tokens_list, patch_start_idx, initial_embeds
+        return aggregated_tokens_list, patch_start_idx
 
     def clean_kv_cache(self):
         """
